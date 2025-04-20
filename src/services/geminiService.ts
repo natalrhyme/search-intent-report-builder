@@ -1,68 +1,67 @@
 
-import { GeminiIntentAnalysis } from "@/types";
+interface IntentAnalysisResponse {
+  intent: string;
+  category: string;
+}
 
-// This would be replaced with an actual API call to the Gemini API
-// For the prototype, we'll use the mock data
-const analyzeQueryIntent = async (queries: string[]): Promise<GeminiIntentAnalysis[]> => {
-  console.log("Analyzing queries with Gemini API:", queries);
-  
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // In a real application, this would use the Gemini API
-  // For now, we'll return mock data
-  // The mock data structure is matching the expected response structure from Gemini
-  return queries.map(query => ({
-    query,
-    intent: generateMockIntent(query),
-    category: generateMockCategory(query),
-  }));
-};
+async function analyzeQueryIntent(queries: string[]): Promise<GeminiIntentAnalysis[]> {
+  const API_KEY = "YOUR_GEMINI_API_KEY";  // You'll need to replace this with your API key
+  const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
-// Helper function to generate mock intent data
-const generateMockIntent = (query: string): string => {
-  const intents = [
-    "Find and compare top options",
-    "Learn how to use or setup",
-    "Find specific information about compatibility",
-    "Read reviews and recommendations",
-    "Solve a specific problem or issue",
-    "Find products within a budget"
-  ];
-  
-  // Simulate some logic to generate relevant intent
-  if (query.includes("best")) {
-    return `Find and compare ${query.replace("best", "").trim()}`;
-  } else if (query.includes("how")) {
-    return `Learn how to use ${query.replace("how", "").trim()}`;
-  } else if (query.includes("vs")) {
-    return `Compare options: ${query}`;
-  } else if (query.includes("review")) {
-    return `Read reviews about ${query.replace("review", "").trim()}`;
-  } else if (query.includes("fix") || query.includes("issue")) {
-    return `Solve problems with ${query.replace("fix", "").replace("issue", "").trim()}`;
-  } else if (query.includes("budget") || query.includes("cheap")) {
-    return `Find affordable ${query.replace("budget", "").replace("cheap", "").trim()}`;
-  } else {
-    return `Find information about ${query}`;
-  }
-};
+  const results = await Promise.all(
+    queries.map(async (query) => {
+      const prompt = `Analyze this search query and provide:
+      1. The user's intent (what they're trying to achieve)
+      2. Content category (Guide, Review, Comparison, Blog, List, or Explainer)
+      
+      Query: "${query}"
+      
+      Respond in JSON format:
+      {
+        "intent": "user's intent",
+        "category": "content category"
+      }`;
 
-// Helper function to generate mock category data
-const generateMockCategory = (query: string): string => {
-  if (query.includes("how") || query.includes("guide")) {
-    return "Guide";
-  } else if (query.includes("vs") || query.includes("compare")) {
-    return "Comparison";
-  } else if (query.includes("review")) {
-    return "Review";
-  } else if (query.includes("what is") || query.includes("definition")) {
-    return "Explainer";
-  } else if (query.includes("best") || query.includes("top")) {
-    return "List";
-  } else {
-    return "Blog";
-  }
-};
+      const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: prompt }]
+            }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to analyze query with Gemini");
+      }
+
+      const data = await response.json();
+      let result: IntentAnalysisResponse;
+
+      try {
+        // Parse the response text as JSON
+        const responseText = data.candidates[0].content.parts[0].text;
+        result = JSON.parse(responseText);
+      } catch (error) {
+        console.error("Error parsing Gemini response:", error);
+        result = {
+          intent: "Failed to analyze",
+          category: "Unknown"
+        };
+      }
+
+      return {
+        query,
+        intent: result.intent,
+        category: result.category
+      };
+    })
+  );
+
+  return results;
+}
 
 export { analyzeQueryIntent };
