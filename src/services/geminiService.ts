@@ -1,8 +1,5 @@
 
-interface IntentAnalysisResponse {
-  intent: string;
-  category: string;
-}
+import { GeminiIntentAnalysis } from "@/types";
 
 async function analyzeQueryIntent(queries: string[]): Promise<GeminiIntentAnalysis[]> {
   const API_KEY = "YOUR_GEMINI_API_KEY";  // You'll need to replace this with your API key
@@ -62,6 +59,12 @@ async function analyzeQueryIntent(queries: string[]): Promise<GeminiIntentAnalys
   );
 
   return results;
+}
+
+// Define the IntentAnalysisResponse interface locally
+interface IntentAnalysisResponse {
+  intent: string;
+  category: string;
 }
 
 export { analyzeQueryIntent };
