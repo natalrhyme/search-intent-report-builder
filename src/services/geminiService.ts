@@ -2,14 +2,14 @@
 import { GeminiIntentAnalysis } from "@/types";
 
 async function analyzeQueryIntent(queries: string[]): Promise<GeminiIntentAnalysis[]> {
-  const API_KEY = "YOUR_GEMINI_API_KEY";  // You'll need to replace this with your API key
+  const API_KEY = "YOUR_GEMINI_API_KEY";
   const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
   const results = await Promise.all(
     queries.map(async (query) => {
       const prompt = `Analyze this search query and provide:
-      1. The user's intent (what they're trying to achieve)
-      2. Content category (Guide, Review, Comparison, Blog, List, or Explainer)
+      1. The user's intent
+      2. Content category
       
       Query: "${query}"
       
@@ -39,7 +39,6 @@ async function analyzeQueryIntent(queries: string[]): Promise<GeminiIntentAnalys
       let result: IntentAnalysisResponse;
 
       try {
-        // Parse the response text as JSON
         const responseText = data.candidates[0].content.parts[0].text;
         result = JSON.parse(responseText);
       } catch (error) {
@@ -61,7 +60,6 @@ async function analyzeQueryIntent(queries: string[]): Promise<GeminiIntentAnalys
   return results;
 }
 
-// Define the IntentAnalysisResponse interface locally
 interface IntentAnalysisResponse {
   intent: string;
   category: string;
