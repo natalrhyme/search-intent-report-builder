@@ -23,8 +23,8 @@ This project analyzes search query intents using Gemini API and displays insight
 
 1. **Clone** the repository:
    ```sh
-   git clone https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git
-   cd <REPO_NAME>
+   git clone https://github.com/natalrhyme/search-intent-report-builder.git
+   cd search-intent-report-builder
    ```
 
 2. **Install dependencies:**
