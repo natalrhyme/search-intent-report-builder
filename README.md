@@ -1,73 +1,31 @@
-# Welcome to your Lovable project
 
-## Project info
+# Gemini Intent Analysis Project
 
-**URL**: https://lovable.dev/projects/47775d63-8365-4ba8-8ddf-29bf3778c0a1
+This project analyzes search query intents using Gemini API and displays insights alongside Google Search Console data.
 
-## How can I edit this code?
+## Technologies
 
-There are several ways of editing your application.
+- React with TypeScript
+- Vite for build tooling
+- Tailwind CSS for styling
+- shadcn/ui component library
+- @tanstack/react-query for data fetching and caching
+- lucide-react for icons
 
-**Use Lovable**
+## How to deploy
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/47775d63-8365-4ba8-8ddf-29bf3778c0a1) and start prompting.
+Deploy your app directly from Lovable:
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Open your project in Lovable.
+2. Click "Share" in the top right.
+3. Select "Publish" to deploy to a Lovable staging domain or connected custom domain.
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+For local development:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+You can edit files directly in Lovable or with your preferred IDE.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/47775d63-8365-4ba8-8ddf-29bf3778c0a1) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
